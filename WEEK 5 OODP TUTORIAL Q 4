@@ -1,0 +1,163 @@
+#include <iostream>
+
+#include <string>
+
+using namespace std;
+
+
+
+class Car {
+
+private:
+
+    string model;
+
+    double pricePerDay;
+
+    bool available;
+
+
+
+public:
+
+    // Default constructor
+
+    Car() : model("Unknown"), pricePerDay(0.0), available(true) {}
+
+
+
+    // Parameterized constructor
+
+    Car(string m, double price, bool avail) : model(m), pricePerDay(price), available(avail) {}
+
+
+
+    // Copy constructor
+
+    Car(const Car& other) {
+
+        model = other.model;
+
+        pricePerDay = other.pricePerDay;
+
+        available = other.available;
+
+    }
+
+
+
+    // Function Overloading: booking a car
+
+    double book(int days) {
+
+        return days * pricePerDay;
+
+    }
+
+
+
+    double book(double discountPercent) {
+
+        double discountedPrice = pricePerDay * (1 - discountPercent / 100);
+
+        return discountedPrice;
+
+    }
+
+
+
+    double book(int days, double insurance) {
+
+        return (days * pricePerDay) + insurance;
+
+    }
+
+
+
+    // Operator Overloading: +
+
+    double operator+(const Car& other) {
+
+        return this->pricePerDay + other.pricePerDay;
+
+    }
+
+
+
+    // Operator Overloading: >
+
+    bool operator>(const Car& other) {
+
+        return this->pricePerDay > other.pricePerDay;
+
+    }
+
+
+
+    void display() {
+
+        cout << "Model: " << model << ", Price/Day: " << pricePerDay
+
+             << ", Available: " << (available ? "Yes" : "No") << endl;
+
+    }
+
+};
+
+
+
+// Example usage
+
+int main() {
+
+    Car car1("Toyota", 50.0, true);
+
+    Car car2("BMW", 80.0, true);
+
+    Car car3 = car1; // Copy constructor
+
+
+
+    car1.display();
+
+    car2.display();
+
+    car3.display();
+
+
+
+    double total1 = car1.book(5); // booking by days
+
+    double total2 = car2.book(10.0); // booking by discount
+
+    double total3 = car1.book(3, 15.0); // booking with insurance
+
+
+
+    cout << "Total1: " << total1 << endl;
+
+    cout << "Total2: " << total2 << endl;
+
+    cout << "Total3: " << total3 << endl;
+
+
+
+    double combined = car1 + car2;
+
+    cout << "Combined price per day: " << combined << endl;
+
+
+
+    if (car2 > car1)
+
+        cout << "Car2 is more expensive to rent per day." << endl;
+
+    else
+
+        cout << "Car1 is more expensive or equal in price." << endl;
+
+
+
+    return 0;
+
+}

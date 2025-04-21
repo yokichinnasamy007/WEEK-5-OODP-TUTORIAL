@@ -1,0 +1,86 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class BankAccount {
+private:
+    string accountNumber;
+    double balance;
+
+public:
+    // Constructor with account number and balance
+    BankAccount(string accNum, double bal) {
+        accountNumber = accNum;
+        balance = bal;
+    }
+
+    // Constructor Overloading - only account number, balance set to 0
+    BankAccount(string accNum) {
+        accountNumber = accNum;
+        balance = 0.0;
+    }
+
+    // Function Overloading - deposit
+    void deposit(double amount) {
+        balance += amount;
+    }
+
+    void deposit(int amount) {
+        balance += amount;
+    }
+
+    // Function Overloading - withdraw
+    void withdraw(double amount) {
+        if (amount <= balance)
+            balance -= amount;
+        else
+            cout << "Insufficient balance!" << endl;
+    }
+
+    void withdraw(int amount) {
+        if (amount <= balance)
+            balance -= amount;
+        else
+            cout << "Insufficient balance!" << endl;
+    }
+
+    // Operator Overloading - compare two accounts based on balance
+    bool operator > (const BankAccount& other) const {
+        return this->balance > other.balance;
+    }
+
+    bool operator < (const BankAccount& other) const {
+        return this->balance < other.balance;
+    }
+
+    bool operator == (const BankAccount& other) const {
+        return this->balance == other.balance;
+    }
+
+    void display() const {
+        cout << "Account Number: " << accountNumber << ", Balance: " << balance << endl;
+    }
+};
+
+// Example usage
+int main() {
+    BankAccount acc1("A101", 1000.50);
+    BankAccount acc2("A102");
+    
+    acc2.deposit(500);      // int version
+    acc2.deposit(200.75);   // double version
+    acc1.withdraw(300);     // int version
+    acc2.withdraw(100.25);  // double version
+
+    acc1.display();
+    acc2.display();
+
+    if (acc1 > acc2)
+        cout << "Account 1 has more balance than Account 2" << endl;
+    else if (acc1 == acc2)
+        cout << "Both accounts have equal balance" << endl;
+    else
+        cout << "Account 2 has more balance than Account 1" << endl;
+
+    return 0;
+}

@@ -1,0 +1,7 @@
+class Example {
+ int x;
+public:
+ Example() { x = 0; } // default constructor
+ Example(int a) { x = a; }
+ void show() { cout << "Value: " << x << endl; }
+};
